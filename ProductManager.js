@@ -1,10 +1,13 @@
+import fs from 'fs/promises';
+
 class ProductManager {
-    constructor() {
-        this.products = [];
+    constructor(filePath) {
+        this.path = filePath;
         this.autoIncrementId = 1;
+        this.loadProducts();
     }
 
-    addProduct(productData) {
+    async addProduct(productData) {
         const { title, description, price, thumbnail, code, stock } = productData;
 
         if (!title || !description || !price || !thumbnail || !code || !stock) {
@@ -26,23 +29,60 @@ class ProductManager {
         };
 
         this.products.push(newProduct);
+        await this.saveProducts();
     }
 
-    getProducts() {
+    async getProducts() {
         return this.products;
     }
 
-    getProductById(id) {
+    async getProductById(id) {
         const product = this.products.find((product) => product.id === id);
         if (!product) {
             throw new Error("Producto no encontrado.");
         }
         return product;
     }
+
+    async updateProduct(id, updatedProduct) {
+        const index = this.products.findIndex((product) => product.id === id);
+
+        if (index !== -1) {
+            this.products[index] = { ...this.products[index], ...updatedProduct };
+            await this.saveProducts();
+            return this.products[index];
+        }
+
+        return null; // Producto no encontrado
+    }
+
+    async deleteProduct(id) {
+        this.products = this.products.filter((product) => product.id !== id);
+        await this.saveProducts();
+        return id;
+    }
+
+    async loadProducts() {
+        try {
+            const fileContent = await fs.readFile(this.path, 'utf-8');
+            this.products = JSON.parse(fileContent);
+            if (!Array.isArray(this.products)) {
+                throw new Error('El contenido del archivo no es un array válido.');
+            }
+        } catch (error) {
+            this.products = [];
+        }
+    }
+    
+
+    async saveProducts() {
+        await fs.writeFile(this.path, JSON.stringify(this.products, null, 2), 'utf-8');
+    }
 }
 
-const manager = new ProductManager();
-// lista de productos
+const manager = new ProductManager('productos.json');
+
+// Lista de productos
 try {
     manager.addProduct({
         title: "remera",
@@ -80,12 +120,12 @@ try {
         stock: 40
     });
 
-    console.log("Productos:", manager.getProducts());
+    console.log("Productos:", await manager.getProducts());
 
-    const product = manager.getProductById(1);
+    const product = await manager.getProductById(1);
     console.log("Producto encontrado:", product);
 
-    manager.getProductById(3);
+    await manager.getProductById(3);
 } catch (error) {
     console.error(error.message);
 }
