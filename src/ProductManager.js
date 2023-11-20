@@ -80,7 +80,7 @@ class ProductManager {
     }
 }
 
-const manager = new ProductManager('productos.json');
+const manager = new ProductManager("productos.json");
 
 // Lista de productos
 try {
@@ -129,3 +129,4 @@ try {
 } catch (error) {
     console.error(error.message);
 }
+module.exports = ProductManager;
