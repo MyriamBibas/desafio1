@@ -9,10 +9,7 @@ const productManagerFile = new ProductManagerFile(path);
 router.get('/', async (req, res) => {
     try {
         const products = await productManagerFile.getProducts();
-        res.send({
-            status: "success",
-            productos: products
-        });
+        res.render('home', { productos });
     } catch (error) {
         res.status(500).send({
             status: "error",
@@ -28,10 +25,7 @@ router.get('/:pid', async (req, res) => {
         const products = await productManagerFile.getProducts();
         const product = products.find(prod => prod.id === productId);
         if (product) {
-            res.send({
-                status: "success",
-                producto: product
-            });
+            res.render('productDetail', { product });
         } else {
             res.status(404).send({
                 status: "error",
@@ -98,5 +92,5 @@ router.delete('/:pid', async (req, res) => {
     }
 });
 
-export { router as productRouter };
 
+export { router as productRouter };
