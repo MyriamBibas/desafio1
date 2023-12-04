@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Productos en Tiempo Real</h1>
+    
+    <div class="realtime-products">
+        <ul class="product-list">
+            {{#each productos}}
+                <li>
+                    <h2>{{this.title}}</h2>
+                    <p>Description: {{this.description}}</p>
+                    <p>Price: ${{this.price}}</p>
+                    <img src="{{this.thumbnail}}" alt="{{this.title}} Image">
+                    <p>Code: {{this.code}}</p>
+                    <p class="stock {{#if this.stock}}available{{else}}out-of-stock{{/if}}">Stock: {{this.stock}}</p>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    
+  <script src="/js/funcion.js"></script>
+</body>
+</html>

@@ -5,7 +5,7 @@ const path = "products.json";
 const router = Router();
 const productManagerFile = new ProductManagerFile(path);
 
-// Obtener todos los productos
+// Obtener todos los productos//
 router.get('/', async (req, res) => {
     try {
         const products = await productManagerFile.getProducts();
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Obtener un producto por su ID
+// Obtener un producto por su ID//
 router.get('/:pid', async (req, res) => {
     try {
         const productId = req.params.pid;
@@ -40,7 +40,7 @@ router.get('/:pid', async (req, res) => {
     }
 });
 
-// Crear un nuevo producto
+// Crear un nuevo producto//
 router.post('/', async (req, res) => {
     try {
         const newProduct = req.body; 
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Actualizar un producto por su ID
+// Actualizar un producto por su ID//
 router.put('/:pid', async (req, res) => {
     try {
         const productId = req.params.pid;
@@ -75,7 +75,7 @@ router.put('/:pid', async (req, res) => {
     }
 });
 
-// Eliminar un producto por su ID
+// Eliminar un producto por su ID//
 router.delete('/:pid', async (req, res) => {
     try {
         const productId = req.params.pid;

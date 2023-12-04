@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de compras</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Productos en el Carrito</h1>
+    <ul class="product-list">
+        {{#each productos}}
+        <li class="product">
+            <h2>{{this.title}}</h2>
+            <p>Descripción: {{this.description}}</p>
+            <p>Precio: ${{this.price}}</p>
+            <img src="{{this.thumbnail}}" alt="{{this.title}} Imagen">
+            <p>Código: {{this.code}}</p>
+            <p>Stock: {{this.stock}}</p>
+            <button onclick="addToCart('{{this.code}}')">Agregar al Carrito</button>
+            <button onclick="removeFromCart('{{this.code}}')">Eliminar del Carrito</button>
+
+            {{/each}}
+    </ul>
+     <script src="/public/funcion.js"></script>
+</body>
+
+</html>
